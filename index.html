@@ -83,7 +83,7 @@
       <option value="informatics">Informatics</option>
 
     </select>
-    <button onclick="recommend()" class="w-full bg-purple-600 p-3 rounded-xl hover:bg-purple-700 transition-colors">Tavsiya Berish</button>
+    <button onclick="recommend()" class="w-full bg-purple-600 p-3 rounded-xl hover:bg-purple-700 transition-colors">Recommend</button>
   </div>
 
   <div id="results"></div>
@@ -124,7 +124,7 @@ function recommend() {
   const resultsDiv = document.getElementById('results');
 
   if (!subject || !data[subject]) {
-    resultsDiv.innerHTML = "<p class='text-red-500 font-semibold'>Iltimos, fan tanlang.</p>";
+    resultsDiv.innerHTML = "<p class='text-red-500 font-semibold'>Choose study areas.</p>";
     return;
   }
 
@@ -146,13 +146,13 @@ function recommend() {
   resultsDiv.innerHTML = `
     <div class='card fade-in'>
       <h2 class='text-2xl font-bold text-purple-400 mb-3'>${item.title}</h2>
-      <h3 class='text-xl font-semibold mt-2 mb-2'>🎥 YouTube videolar:</h3>
+      <h3 class='text-xl font-semibold mt-2 mb-2'>🎥 YouTube videos:</h3>
       <ul class='list-disc ml-6 text-blue-400'>
-        ${item.videos.map(v => `<li>📹 <a href='${v}' target='_blank' class='underline hover:text-blue-200'>Buni tomosha qiling</a></li>`).join('')}
+        ${item.videos.map(v => `<li>📹 <a href='${v}' target='_blank' class='underline hover:text-blue-200'>Watch this</a></li>`).join('')}
       </ul>
-      <h3 class='text-xl font-semibold mt-3 mb-2'>📄 Maqolalar:</h3>
+      <h3 class='text-xl font-semibold mt-3 mb-2'>📄 Articles:</h3>
       <ul class='list-disc ml-6 text-green-400'>
-        ${item.articles.map(a => `<li>📄 <a href='${a}' target='_blank' class='underline hover:text-green-200'>O'qish</a></li>`).join('')}
+        ${item.articles.map(a => `<li>📄 <a href='${a}' target='_blank' class='underline hover:text-green-200'>Read this</a></li>`).join('')}
       </ul>
     </div>
   `;
@@ -165,4 +165,5 @@ document.addEventListener('mousemove', (e) => {
 </script>
 </body>
 </html>
+
 
