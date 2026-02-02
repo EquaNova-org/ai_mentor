@@ -7,11 +7,19 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    color: white;
-    font-family: 'Arial', sans-serif;
-    overflow-x: hidden;
-  }
+  background:
+    linear-gradient(135deg, rgba(15,12,41,0.85), rgba(48,43,99,0.85), rgba(36,36,62,0.85)),
+    url("library-globe-books.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  color: white;
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
+}
+
   .floating-robot {
     width: 100px;
     position: absolute;
@@ -165,6 +173,7 @@ document.addEventListener('mousemove', (e) => {
 </script>
 </body>
 </html>
+
 
 
 
