@@ -4,66 +4,26 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AI Mentor</title>
+
+<!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
- body {
-  background:
-    linear-gradient(135deg, rgba(15,12,41,0.85), rgba(48,43,99,0.85), rgba(36,36,62,0.85)),
-    url("https://raw.githubusercontent.com/EquaNova-org/ai-mentor/main/ChatGPT-Image-Feb-2-2026-05_10_59-PM.png");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
 
-  color: white;
-  font-family: 'Arial', sans-serif;
-  overflow-x: hidden;
-}
-
-  .floating-robot {
-    width: 100px;
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: transform 0.2s ease, rotate 0.2s ease;
-    z-index: 10;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-  .card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 25px rgba(0,0,0,0.5);
-  }
-  .floating-emoji {
-    position: absolute;
-    font-size: 2rem;
-    animation: floatEmoji 1.5s ease-out forwards;
-  }
-  @keyframes floatEmoji {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-40px); }
-  }
-</style>
+<!-- Link to your external CSS file -->
+<link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen p-6 relative">
 
+<!-- Floating Robot -->
 <img src="https://cdn-icons-png.flaticon.com/512/4712/4712057.png" alt="AI Robot" class="floating-robot" id="robot" />
 
+<!-- Main Content -->
 <div class="max-w-5xl mx-auto text-center mt-32">
   <h1 class="text-4xl font-bold text-purple-400 mt-4 mb-2">🤖 AI Mentor 🤖</h1>
-  <p class="text-gray-300 text-lg mb-8">AI Mentor can suggest appropriate materials that are both beginner-friendly yet has professional feeling for you to learn. Once you choose the subject, click the button "Recommend" down below to get materials.</p>
+  <p class="text-gray-300 text-lg mb-8">
+    AI Mentor can suggest appropriate materials that are both beginner-friendly yet has professional feeling for you to learn. Once you choose the subject, click the button "Recommend" down below to get materials.
+  </p>
 
+  <!-- Subject Selector -->
   <div class="p-6 mb-6 rounded-2xl border border-purple-700 bg-gradient-to-b from-black/30 to-black/10">
     <label class="block mb-2 font-semibold">Introduce your stuff:</label>
     <select id="subject" class="w-full p-3 mb-4 rounded-xl border border-gray-400 bg-black/20 hover:border-purple-500">
@@ -86,17 +46,18 @@
       <option value="zoology">Zoology</option>
       <option value="logic">Logic</option>
       <option value="politics">Politics</option>
-
-      <!-- ✅ Added Informatika -->
       <option value="informatics">Informatics</option>
-
     </select>
-    <button onclick="recommend()" class="w-full bg-purple-600 p-3 rounded-xl hover:bg-purple-700 transition-colors">Recommend</button>
+    <button onclick="recommend()" class="w-full bg-purple-600 p-3 rounded-xl hover:bg-purple-700 transition-colors">
+      Recommend
+    </button>
   </div>
 
+  <!-- Results Section -->
   <div id="results"></div>
 </div>
 
+<!-- Scripts -->
 <script>
 const data = {
   "history of middle ages": {title:"History of middle ages", emoji:"🏰", videos:["https://www.youtube.com/watch?v=z56d4f1uT3k&list=PLJlSmMy6ldlmCFJjsBw1EUOuGcAbftIOG"], articles:["https://www.historyextra.com/period/medieval/"]},
@@ -110,21 +71,14 @@ const data = {
   "programming_js": {title:"JavaScript cores", emoji:"💻", videos:["https://www.youtube.com/watch?v=q8yclECd9CY&list=PLpDyZ4xZcDg8fRiY6xgsQcDiMjNYJhNjE"], articles:["https://www.texnoman.uz/posts/tag/javascript"]},
   "literature": {title:"Literature", emoji:"📚", videos:["https://www.youtube.com/watch?v=ODIAkLSdwv8&list=PLOLz2vuEAiKIXmZ-GnWIpElQW1ijl0Wjp&pp=0gcJCbAEOCosWNin"], articles:["https://n.ziyouz.com/portal-haqida/xarita/maqolalar"]},
   "english": {title:"English", emoji:"🇬🇧", videos:["https://www.youtube.com/watch?v=d-fvgkbTED0&list=PLkREkayoYCyI9KGsZ2TfeVccRv9zqP0gl"], articles:["https://kun.uz/news/2018/02/09/kunuz-sinfhonasi-nima-ucun-ingliz-tilini-butun-dune-tan-olgan"]},
-  "ecomomics": {title:"Economics", emoji:"💰", videos:["https://www.youtube.com/watch?v=S-YA-V9eOlg&list=PLGO4HdV8zhh_kp296GEE7HHRAfLVgtihE"], articles:["https://api.scienceweb.uz/storage/publication_files/1916/9723/6440c14737076___STARS%20conf%20Yashirin%20iqtisodiyotning%20jamiyatga%20tasiri.pdf"]},
+  "economics": {title:"Economics", emoji:"💰", videos:["https://www.youtube.com/watch?v=S-YA-V9eOlg&list=PLGO4HdV8zhh_kp296GEE7HHRAfLVgtihE"], articles:["https://api.scienceweb.uz/storage/publication_files/1916/9723/6440c14737076___STARS%20conf%20Yashirin%20iqtisodiyotning%20jamiyatga%20tasiri.pdf"]},
   "psychology": {title:"Psychology", emoji:"🧠", videos:["https://www.youtube.com/watch?v=_1r2FihbgPA&list=PLeRD4s8cOayJA5P-ng5GjpWiWC36fse-g"], articles:["https://api.scienceweb.uz/storage/publication_files/2531/10613/646510766be61___Oliy%20talim%20tizimida%20psixologik%20xizmatni....%202023NN%20(3).pdf"]},
   "history": {title:"History", emoji:"🏛️", videos:["https://www.youtube.com/watch?v=4jh5iWJ7Cds&list=PLOLz2vuEAiKKaLFjU_r3oBWarzSW5mgyY&pp=0gcJCbAEOCosWNin"], articles:["https://aboo-edu.uz/category/tarix/"]},
   "astronomy": {title:"Astronomy", emoji:"🌌", videos:["https://www.youtube.com/watch?v=QVSQxMU4pH0&list=PLGO4HdV8zhh_Tp_1xN0CP4KSSGH099tqT"], articles:["https://uz.wikipedia.org/wiki/Astronomiya"]},
   "zoology": {title:"Zoology", emoji:"🐾", videos:["https://www.youtube.com/watch?v=T0kdMaA3LUY&list=PLQoqfbdwNtFdaErzg4B1h4lHo3S24ZMQd"], articles:["https://uz.wikipedia.org/wiki/Zoologiya"]},
   "logic": {title:"Logic", emoji:"🧩", videos:["https://www.youtube.com/watch?v=O5jGdkezXcQ&pp=ygUfbWFudGlxIGZhbmxhcmkgbm9sZGFuIG8ncmdhbmlzaA%3D%3D"], articles:["https://xadicha.uz/oz/news/20"]},
   "politics": {title:"Politics", emoji:"⚖️", videos:["https://www.youtube.com/watch?v=Qewckuxa9hw"], articles:["https://progressmagazine.net/"]},
-
-  /* ✅ Added Informatics */
-  "informatics": {
-    title: "Informatics",
-    emoji: "💾",
-    videos: ["https://www.youtube.com/watch?v=lQyKo3kTvM4&list=PLV6IQEEtbQaINz7nPAU8NxNkLnI2I6OoE"],
-    articles: ["https://www.texnoman.uz/posts/tag/informatika"]
-  }
+  "informatics": {title:"Informatics", emoji:"💾", videos:["https://www.youtube.com/watch?v=lQyKo3kTvM4&list=PLV6IQEEtbQaINz7nPAU8NxNkLnI2I6OoE"], articles:["https://www.texnoman.uz/posts/tag/informatika"]}
 };
 
 function recommend() {
@@ -166,6 +120,7 @@ function recommend() {
   `;
 }
 
+// Make robot follow mouse
 document.addEventListener('mousemove', (e) => {
   const robot = document.getElementById('robot');
   robot.style.left = e.clientX + "px";
@@ -173,8 +128,3 @@ document.addEventListener('mousemove', (e) => {
 </script>
 </body>
 </html>
-
-
-
-
-
