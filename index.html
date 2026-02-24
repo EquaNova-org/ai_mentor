@@ -4,6 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Mentor</title>
+  <!-- Top Telegram Banner -->
+<div class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3 px-4 flex justify-center items-center gap-3 shadow-md">
+  
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"
+    alt="Telegram"
+    class="w-6 h-6"
+  />
+
+  <span class="font-semibold text-sm sm:text-base">
+    Join our Telegram channel for updates, resources, and announcements
+  </span>
+
+  <a
+    href="https://t.me/financehub2025"
+    target="_blank"
+    class="ml-2 bg-white text-blue-600 px-4 py-1.5 rounded-full font-bold hover:bg-gray-100 transition"
+  >
+    Join
+  </a>
+
+</div>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -134,7 +156,7 @@ const data = {
 
   javascript: {
     title: "JavaScript",
-    emoji: "💻",
+    emoji: "⚙️",
     videos: ["https://www.youtube.com/watch?v=EerdGm-ehJQ"],
     articles: ["https://javascript.info/"]
   },
@@ -155,7 +177,7 @@ const data = {
 
   economics: {
     title: "Economics",
-    emoji: "📉",
+    emoji: "📊",
     videos: ["https://www.youtube.com/watch?v=NngM_qdDMm8"],
     articles: ["https://fee.org/articles/12-articles-every-aspiring-economist-should-read/"]
   },
@@ -166,6 +188,13 @@ const data = {
     videos: ["https://www.youtube.com/watch?v=BDqvzFY72mg&list=PLh9mgdi4rNeyViG2ar68jkgEi4y6doNZy"],
     articles: ["https://tetw.org/Politics"]
   },
+
+  informatics: {
+  title: "Informatics",
+  emoji: "💻",
+  videos: ["https://www.youtube.com/watch?v=y2kg3MOk1sY"],
+  articles: ["https://www.mdpi.com/2227-9709/12/3"],  
+},
   
   university: {
     title: "University Studies & Scholarships",
@@ -229,17 +258,10 @@ document.addEventListener("mousemove", e => {
   robot.style.left = e.clientX + "px";
 });
 </script>
-<!-- Fixed Telegram Button -->
-<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-  <a href="https://t.me/financehub2025" target="_blank"
-     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-colors flex items-center space-x-2">
-    <!-- Optional Telegram icon -->
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" class="w-6 h-6"/>
-    <span>Join Telegram for the latest news about our FinanceHub</span>
-  </a>
-</div>
+
 </body>
 </html>
+
 
 
 
