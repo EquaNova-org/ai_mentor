@@ -1,135 +1,232 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Mentor</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Mentor</title>
 
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Link to your external CSS file -->
-<link rel="stylesheet" href="style.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen p-6 relative">
+
+<body class="min-h-screen p-6 relative bg-black text-white">
 
 <!-- Floating Robot -->
-<img src="https://cdn-icons-png.flaticon.com/512/4712/4712057.png" alt="AI Robot" class="floating-robot" id="robot" />
+<img
+  id="robot"
+  src="https://cdn-icons-png.flaticon.com/512/4712/4712057.png"
+  alt="AI Robot"
+  class="floating-robot fixed top-10 left-1/2 w-20 -translate-x-1/2 transition-transform duration-300"
+/>
 
 <!-- Main Content -->
 <div class="max-w-5xl mx-auto text-center mt-32">
-  <h1 class="text-4xl font-bold text-purple-400 mt-4 mb-2">🤖 AI Mentor 🤖</h1>
+
+  <h1 class="text-4xl font-bold text-purple-400 mb-2">🤖 AI Mentor 🤖</h1>
+
   <p class="text-gray-300 text-lg mb-8">
-    AI Mentor can suggest appropriate materials that are both beginner-friendly yet has professional feeling for you to learn. Once you choose the subject, click the button "Recommend" down below to get materials.
+    Choose a subject and get beginner-friendly yet professional learning resources.
   </p>
 
-  <!-- Subject Selector -->
+  <!-- Selector -->
   <div class="p-6 mb-6 rounded-2xl border border-purple-700 bg-gradient-to-b from-black/30 to-black/10">
-    <label class="block mb-2 font-semibold">Introduce your stuff:</label>
-    <select id="subject" class="w-full p-3 mb-4 rounded-xl border border-gray-400 bg-black/20 hover:border-purple-500">
-      <option value="">Choose study areas...</option>
-      <option value="history of middle ages">History of middle ages</option>
-      <option value="mathematics">Mathematics</option>
+
+    <label class="block mb-2 font-semibold">Choose your subject:</label>
+
+    <select
+      id="subject"
+      class="w-full p-3 mb-4 rounded-xl border border-gray-400 bg-black/20 hover:border-purple-500"
+    >
+      <option value="">Select a subject...</option>
+      <option value="middle_ages">History of Middle Ages</option>
+      <option value="math">Mathematics</option>
       <option value="physics">Physics</option>
       <option value="chemistry">Chemistry</option>
       <option value="biology">Biology</option>
       <option value="geography">Geography</option>
       <option value="algorithms">Algorithms</option>
-      <option value="programming_html">HTML</option>
-      <option value="programming_js">JavaScript cores</option>
+      <option value="html">HTML</option>
+      <option value="javascript">JavaScript</option>
       <option value="literature">Literature</option>
       <option value="english">English</option>
       <option value="economics">Economics</option>
       <option value="psychology">Psychology</option>
       <option value="history">History</option>
-      <option value="astronomy">Astronomy</option>    
+      <option value="astronomy">Astronomy</option>
       <option value="zoology">Zoology</option>
       <option value="logic">Logic</option>
       <option value="politics">Politics</option>
       <option value="informatics">Informatics</option>
-      <option value="university studies, scholarships and admissions">University studies, scholarships and admissions</option>
-      <option value="financehub">FinanceHub</option>
+      <option value="university">University studies & scholarships</option>
+      <option value="finance">Finance & money management</option>
     </select>
-    <button onclick="recommend()" class="w-full bg-purple-600 p-3 rounded-xl hover:bg-purple-700 transition-colors">
+
+    <button
+      onclick="recommend()"
+      class="w-full bg-purple-600 p-3 rounded-xl hover:bg-purple-700 transition-colors font-semibold"
+    >
       Recommend
     </button>
   </div>
 
-  <!-- Results Section -->
+  <!-- Results -->
   <div id="results"></div>
+
 </div>
 
-<!-- Scripts -->
 <script>
+/* ===================== DATA ===================== */
+
 const data = {
-  "history of middle ages": {title:"History of middle ages", emoji:"🏰", videos:["https://www.youtube.com/watch?v=z56d4f1uT3k&list=PLJlSmMy6ldlmCFJjsBw1EUOuGcAbftIOG"], articles:["https://www.historyextra.com/period/medieval/"]},
-  "mathematics": {title:"Mathematics", emoji:"➗", videos:["https://www.youtube.com/watch?v=JbhBdOfMEPs&list=PLybg94GvOJ9FoGQeUMFZ4SWZsr30jlUYK"], articles:["https://njctl.org/materials/categories/mathematics/"]},
-  "physics": {title:"Physics", emoji:"⚛️", videos:["https://www.youtube.com/watch?v=b1t41Q3xRM8&list=PL0o_zxa4K1BU6wPPLDsoTj1_wEf0LSNeR"], articles:["https://www.phywe.com/physics/"]},
-  "chemistry": {title:"Chemistry", emoji:"🧪", videos:["https://www.youtube.com/watch?v=ZuWa827qAao&list=PLybg94GvOJ9EbbO2RXPWTUNIIE0C7hSfm"], articles:["https://www.sciencedirect.com/topics/materials-science/materials-chemistry"]},
-  "biology": {title:"Biology", emoji:"🧬", videos:["https://www.youtube.com/watch?v=eaNeyq4iEkw&list=PLkocNW0BSuEEMyVUCyaRPVj_cahCvjxAr"], articles:["https://www.labxchange.org/subjects?gad_source=1&gad_campaignid=21662538862&gbraid=0AAAAACZ8bHmpZGh4hFNOA2P5d7TP-Kte1&gclid=Cj0KCQiAkPzLBhD4ARIsAGfah8gDHGhaAg4as8hd0cCdMOZ_QYBqJm4XdtblGhdi2jPhatBKTinMH1oaAtLBEALw_wcB"]},
-  "geography": {title:"Geography", emoji:"🌍", videos:["https://www.youtube.com/watch?v=5rhlY_5lW-w&list=PLOLz2vuEAiKJGVkDUJeIheedcJGp9kM5G"], articles:["https://www.iupr.ru/_files/ugd/b06fdc_46ca3d69bd9640aabef18f8c1ef6b7ab.pdf?index=true"]},
-  "algorithms": {title:"Algorithms", emoji:"🖥️", videos:["https://www.youtube.com/watch?v=B56tkdlfuec&list=PLwsopmzfbOn8aR9xpU7ePK30scihq4zuW"], articles:["https://www.texnoman.uz/posts/tag/algoritm"]},
-  "programming_html": {title:"HTML", emoji:"📄", videos:["https://www.youtube.com/watch?v=9dUhZq9dkHM&list=PLpDyZ4xZcDg_aAzP6pDD1PRsYCSdheveS"], articles:["https://uzbekdevs.uz/maqolalar/html-o-zi-nima-htmlning-kelib-chiqish-tarixiga-nazar"]},
-  "programming_js": {title:"JavaScript cores", emoji:"💻", videos:["https://www.youtube.com/watch?v=q8yclECd9CY&list=PLpDyZ4xZcDg8fRiY6xgsQcDiMjNYJhNjE"], articles:["https://www.texnoman.uz/posts/tag/javascript"]},
-  "literature": {title:"Literature", emoji:"📚", videos:["https://www.youtube.com/watch?v=ODIAkLSdwv8&list=PLOLz2vuEAiKIXmZ-GnWIpElQW1ijl0Wjp&pp=0gcJCbAEOCosWNin"], articles:["https://n.ziyouz.com/portal-haqida/xarita/maqolalar"]},
-  "english": {title:"English", emoji:"🇬🇧", videos:["https://www.youtube.com/watch?v=d-fvgkbTED0&list=PLkREkayoYCyI9KGsZ2TfeVccRv9zqP0gl"], articles:["https://kun.uz/news/2018/02/09/kunuz-sinfhonasi-nima-ucun-ingliz-tilini-butun-dune-tan-olgan"]},
-  "economics": {title:"Economics", emoji:"💰", videos:["https://www.youtube.com/watch?v=S-YA-V9eOlg&list=PLGO4HdV8zhh_kp296GEE7HHRAfLVgtihE"], articles:["https://api.scienceweb.uz/storage/publication_files/1916/9723/6440c14737076___STARS%20conf%20Yashirin%20iqtisodiyotning%20jamiyatga%20tasiri.pdf"]},
-  "psychology": {title:"Psychology", emoji:"🧠", videos:["https://www.youtube.com/watch?v=_1r2FihbgPA&list=PLeRD4s8cOayJA5P-ng5GjpWiWC36fse-g"], articles:["https://api.scienceweb.uz/storage/publication_files/2531/10613/646510766be61___Oliy%20talim%20tizimida%20psixologik%20xizmatni....%202023NN%20(3).pdf"]},
-  "history": {title:"History", emoji:"🏛️", videos:["https://www.youtube.com/watch?v=4jh5iWJ7Cds&list=PLOLz2vuEAiKKaLFjU_r3oBWarzSW5mgyY&pp=0gcJCbAEOCosWNin"], articles:["https://aboo-edu.uz/category/tarix/"]},
-  "astronomy": {title:"Astronomy", emoji:"🌌", videos:["https://www.youtube.com/watch?v=QVSQxMU4pH0&list=PLGO4HdV8zhh_Tp_1xN0CP4KSSGH099tqT"], articles:["https://uz.wikipedia.org/wiki/Astronomiya"]},
-  "zoology": {title:"Zoology", emoji:"🐾", videos:["https://www.youtube.com/watch?v=T0kdMaA3LUY&list=PLQoqfbdwNtFdaErzg4B1h4lHo3S24ZMQd"], articles:["https://uz.wikipedia.org/wiki/Zoologiya"]},
-  "logic": {title:"Logic", emoji:"🧩", videos:["https://www.youtube.com/watch?v=O5jGdkezXcQ&pp=ygUfbWFudGlxIGZhbmxhcmkgbm9sZGFuIG8ncmdhbmlzaA%3D%3D"], articles:["https://xadicha.uz/oz/news/20"]},
-  "politics": {title:"Politics", emoji:"⚖️", videos:["https://www.youtube.com/watch?v=Qewckuxa9hw"], articles:["https://progressmagazine.net/"]},
-  "informatics": {title:"Informatics", emoji:"💾", videos:["https://www.youtube.com/watch?v=lQyKo3kTvM4&list=PLV6IQEEtbQaINz7nPAU8NxNkLnI2I6OoE"], articles:["https://www.texnoman.uz/posts/tag/informatika"]}
-  "university studies, scholarships and admissions": {title:"University studies, scholarships and admissions", emoji:"🎓", videos:["https://www.youtube.com/watch?v=zx1j-LP_XiA"], articles:["https://www.collegexpress.com/articles-and-advice/admission/articles/college-applications/research-in-high-school-what-actually-counts-for-admissions/?_gl=1*1q09wl1*_up*MQ..*_ga*NTgyMTgwOTQ3LjE3NzE5MTIxOTE.*_ga_2MX1KYP813*czE3NzE5MTIxOTkkbzEkZzAkdDE3NzE5MTIxOTkkajYwJGwwJGgw"]}
-  "financehub": {title:"FinanceHub", emoji:"📊", videos:["https://www.youtube.com/watch?v=lQyKo3kTvM4&list=PLV6IQEEtbQaINz7nPAU8NxNkLnI2I6OoE"], articles:["https://www.texnoman.uz/posts/tag/informatika"]}
+  middle_ages: {
+    title: "History of the Middle Ages",
+    emoji: "🏰",
+    videos: ["https://www.youtube.com/watch?v=z56d4f1uT3k"],
+    articles: ["https://www.historyextra.com/period/medieval/"]
+  },
+
+  math: {
+    title: "Mathematics",
+    emoji: "➗",
+    videos: ["https://www.youtube.com/watch?v=JbhBdOfMEPs"],
+    articles: ["https://njctl.org/materials/categories/mathematics/"]
+  },
+
+  physics: {
+    title: "Physics",
+    emoji: "⚛️",
+    videos: ["https://www.youtube.com/watch?v=b1t41Q3xRM8"],
+    articles: ["https://www.phywe.com/physics/"]
+  },
+
+  chemistry: {
+    title: "Chemistry",
+    emoji: "🧪",
+    videos: ["https://www.youtube.com/watch?v=ZuWa827qAao"],
+    articles: ["https://www.sciencedirect.com/topics/materials-science/materials-chemistry"]
+  },
+
+  biology: {
+    title: "Biology",
+    emoji: "🧬",
+    videos: ["https://www.youtube.com/watch?v=eaNeyq4iEkw"],
+    articles: ["https://www.labxchange.org/subjects"]
+  },
+
+  geography: {
+    title: "Geography",
+    emoji: "🌍",
+    videos: ["https://www.youtube.com/watch?v=5rhlY_5lW-w"],
+    articles: ["https://www.iupr.ru"]
+  },
+
+  algorithms: {
+    title: "Algorithms",
+    emoji: "🖥️",
+    videos: ["https://www.youtube.com/watch?v=B56tkdlfuec"],
+    articles: ["https://www.texnoman.uz/posts/tag/algoritm"]
+  },
+
+  html: {
+    title: "HTML",
+    emoji: "📄",
+    videos: ["https://www.youtube.com/watch?v=9dUhZq9dkHM"],
+    articles: ["https://uzbekdevs.uz"]
+  },
+
+  javascript: {
+    title: "JavaScript",
+    emoji: "💻",
+    videos: ["https://www.youtube.com/watch?v=q8yclECd9CY"],
+    articles: ["https://www.texnoman.uz/posts/tag/javascript"]
+  },
+
+  literature: {
+    title: "Literature",
+    emoji: "📚",
+    videos: ["https://www.youtube.com/watch?v=ODIAkLSdwv8"],
+    articles: ["https://n.ziyouz.com"]
+  },
+
+  english: {
+    title: "English",
+    emoji: "🇬🇧",
+    videos: ["https://www.youtube.com/watch?v=d-fvgkbTED0"],
+    articles: ["https://kun.uz"]
+  },
+
+  economics: {
+    title: "Economics",
+    emoji: "📉",
+    videos: ["https://www.youtube.com/watch?v=S-YA-V9eOlg"],
+    articles: ["https://api.scienceweb.uz"]
+  },
+
+  university: {
+    title: "University Studies & Scholarships",
+    emoji: "🎓",
+    videos: ["https://www.youtube.com/watch?v=zx1j-LP_XiA"],
+    articles: ["https://www.collegexpress.com/articles-and-advice/admission/"]
+  },
+
+  finance: {
+    title: "Finance & Money Management",
+    emoji: "🧾",
+    videos: ["https://www.youtube.com/watch?v=HQzoZfc3GwQ"],
+    articles: ["https://www.investopedia.com/personal-finance-4427760"]
+  }
 };
 
+/* ===================== FUNCTION ===================== */
+
 function recommend() {
-  const subject = document.getElementById('subject').value;
-  const resultsDiv = document.getElementById('results');
+  const subject = document.getElementById("subject").value;
+  const results = document.getElementById("results");
 
   if (!subject || !data[subject]) {
-    resultsDiv.innerHTML = "<p class='text-red-500 font-semibold'>Choose study areas.</p>";
+    results.innerHTML =
+      "<p class='text-red-400 font-semibold'>Please choose a subject.</p>";
     return;
   }
 
   const item = data[subject];
 
-  const robot = document.getElementById('robot');
+  // Robot animation
+  const robot = document.getElementById("robot");
   robot.style.transform = "translate(-50%, -40px) rotate(-10deg)";
-  setTimeout(() => robot.style.transform = "translateX(-50%)", 400);
+  setTimeout(() => {
+    robot.style.transform = "translate(-50%, 0)";
+  }, 400);
 
-  const emoji = document.createElement('div');
-  emoji.textContent = item.emoji;
-  emoji.className = "floating-emoji";
-  emoji.style.top = "20px";
-  emoji.style.left = "50%";
-  emoji.style.transform = "translateX(-50%)";
-  document.body.appendChild(emoji);
-  setTimeout(() => emoji.remove(), 1500);
+  results.innerHTML = `
+    <div class="mt-6 p-6 rounded-2xl border border-purple-700 bg-black/30 fade-in">
+      <h2 class="text-3xl font-bold text-purple-400 mb-4">
+        ${item.emoji} ${item.title}
+      </h2>
 
-  resultsDiv.innerHTML = `
-    <div class='card fade-in'>
-      <h2 class='text-2xl font-bold text-purple-400 mb-3'>${item.title}</h2>
-      <h3 class='text-xl font-semibold mt-2 mb-2'>🎥 YouTube videos:</h3>
-      <ul class='list-disc ml-6 text-blue-400'>
-        ${item.videos.map(v => `<li>📹 <a href='${v}' target='_blank' class='underline hover:text-blue-200'>Watch this</a></li>`).join('')}
+      <h3 class="text-xl font-semibold mb-2">🎥 Videos</h3>
+      <ul class="list-disc ml-6 mb-4 text-blue-400">
+        ${item.videos.map(v => `<li><a href="${v}" target="_blank" class="underline">Watch</a></li>`).join("")}
       </ul>
-      <h3 class='text-xl font-semibold mt-3 mb-2'>📄 Articles:</h3>
-      <ul class='list-disc ml-6 text-green-400'>
-        ${item.articles.map(a => `<li>📄 <a href='${a}' target='_blank' class='underline hover:text-green-200'>Read this</a></li>`).join('')}
+
+      <h3 class="text-xl font-semibold mb-2">📄 Articles</h3>
+      <ul class="list-disc ml-6 text-green-400">
+        ${item.articles.map(a => `<li><a href="${a}" target="_blank" class="underline">Read</a></li>`).join("")}
       </ul>
     </div>
   `;
 }
 
-// Make robot follow mouse
-document.addEventListener('mousemove', (e) => {
-  const robot = document.getElementById('robot');
+/* ===================== ROBOT FOLLOW ===================== */
+
+document.addEventListener("mousemove", e => {
+  const robot = document.getElementById("robot");
   robot.style.left = e.clientX + "px";
 });
 </script>
+
 </body>
 </html>
-
