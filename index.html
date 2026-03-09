@@ -262,34 +262,83 @@ document.addEventListener("mousemove", e => {
   </a>
 </div>
   
-  <section class="top-sources">
-  <h2>🌟 Top Learning Sources</h2>
-  <p class="sources-subtitle">Trusted platforms where you can explore more high-quality knowledge.</p>
+ <section class="top-sources mt-32 mb-20 text-center">
 
-  <div class="sources-container">
+  <!-- Glowing divider -->
+  <div class="w-56 h-[2px] mx-auto mb-10 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-70"></div>
 
-    <div class="source-card">
-      <h3>YouTube</h3>
-      <p>Explore high-quality educational videos from top creators.</p>
-      <a href="https://youtube.com" target="_blank">Visit Channel →</a>
+  <h2 class="text-3xl font-bold text-purple-400 mb-3 tracking-wide">
+    🌟 Top Learning Sources
+  </h2>
+
+  <p class="sources-subtitle text-gray-400 mb-10">
+    Trusted platforms where you can explore more high-quality knowledge.
+  </p>
+
+  <div class="sources-container flex justify-center gap-8 flex-wrap">
+
+    <!-- Card 1 -->
+    <div class="source-card w-64 p-7 rounded-2xl border border-purple-600/40 
+                bg-gradient-to-br from-purple-500/10 to-black/60
+                backdrop-blur-lg
+                shadow-[0_0_25px_rgba(168,85,247,0.25)]
+                hover:shadow-[0_0_35px_rgba(168,85,247,0.55)]
+                hover:-translate-y-2 hover:scale-105
+                transition-all duration-300">
+
+      <h3 class="text-xl font-semibold text-purple-200 mb-3">
+        YouTube
+      </h3>
+
+      <p class="text-gray-300 text-sm mb-4">
+        Explore high-quality educational videos from top creators.
+      </p>
+
+      <a href="https://www.youtube.com/@TEDx"
+         target="_blank"
+         class="inline-block px-4 py-2 rounded-full
+                bg-gradient-to-r from-purple-600 to-purple-700
+                hover:from-purple-500 hover:to-purple-600
+                text-sm font-semibold transition-all">
+        Visit Channel →
+      </a>
+
     </div>
 
-    <div class="source-card">
-      <h3>Medium</h3>
-      <p>Deep insights and well-written articles from experts.</p>
-      <a href="https://medium.com" target="_blank">Read Articles →</a>
-    </div>
+    <!-- Card 2 -->
+    <div class="source-card w-64 p-7 rounded-2xl border border-purple-600/40 
+                bg-gradient-to-br from-purple-500/10 to-black/60
+                backdrop-blur-lg
+                shadow-[0_0_25px_rgba(168,85,247,0.25)]
+                hover:shadow-[0_0_35px_rgba(168,85,247,0.55)]
+                hover:-translate-y-2 hover:scale-105
+                transition-all duration-300">
 
-    <div class="source-card">
-      <h3>Coursera</h3>
-      <p>Structured courses from leading universities and companies.</p>
-      <a href="https://coursera.org" target="_blank">Explore Courses →</a>
+      <h3 class="text-xl font-semibold text-purple-200 mb-3">
+        Coursera
+      </h3>
+
+      <p class="text-gray-300 text-sm mb-4">
+        Structured courses from leading universities and companies.
+      </p>
+
+      <a href="https://coursera.org"
+         target="_blank"
+         class="inline-block px-4 py-2 rounded-full
+                bg-gradient-to-r from-purple-600 to-purple-700
+                hover:from-purple-500 hover:to-purple-600
+                text-sm font-semibold transition-all">
+        Explore Courses →
+      </a>
+
     </div>
 
   </div>
+
 </section>
 </body>
 </html>
+
 
 
 
